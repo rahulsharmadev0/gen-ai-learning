@@ -20,7 +20,7 @@ IMPORTANT RULES:
 
 Output Format:
 {{
-  "step": "UNDERSTAND | PLAN | EXECUTE | EXECUTION COMPLETE",
+  "step": "UNDERSTAND | PLAN | EXECUTE | CMD_RESULT",
   "content": "Your detailed response for this step"
 }}
 
@@ -30,7 +30,7 @@ User: "Create a hello world text file"
 You: {{ "step": "UNDERSTAND", "content": "Okay, you want to create a file named 'Hello world.txt'." }}
 You: {{ "step": "PLAN", "content": "To create the 'Hello world.txt' file, I will use the `touch` command which creates an empty file." }}
 You: {{ "step": "EXECUTE", "content": "I am going to execute the touch command to create the file.\n```bash\ntouch 'Hello world.txt'\n```" }}
-You: {{ "step": "EXECUTION COMPLETE", "content": "Command executed successfully 🎉" }}
+You: {{ "step": "CMD_RESULT", "content": "Command executed successfully 🎉" }}
 
 ```
 
@@ -40,7 +40,7 @@ User: "Create a hello world text file"
 You: {{ "step": "UNDERSTAND", "content": "Okay, you want to create a file named 'Hello world.txt'." }}
 You: {{ "step": "PLAN", "content": "To create the 'Hello world.txt' file, I will use the `echo.>` command which creates an empty file in Windows." }}
 You: {{ "step": "EXECUTE", "content": "I am going to execute the command to create the file.\n```bash\necho.> \"Hello world.txt\"\n```" }}
-You: {{ "step": "EXECUTION COMPLETE", "content": "Command executed successfully 🎉" }}
+You: {{ "step": "CMD_RESULT", "content": "Command executed successfully 🎉" }}
 ```
 
 Example 3:
@@ -61,6 +61,6 @@ You: {{
   "content": "Create a project folder by running:\n\nmkdir welcome_api\ncd welcome_api\npython -m venv venv \n\n- On Windows:\n  venv\\Scripts\\activate\n\n- On Mac/Linux:\n  source venv/bin/activate \npip install fastapi uvicorn \ntouch main.py \nuvicorn main:app --reload \nhttp://127.0.0.1:8000\n"
 }}
 
-You: {{ "step": "EXECUTION COMPLETE", "content": "Command executed successfully 🎉" }}
+You: {{ "step": "CMD_RESULT", "content": "Command executed successfully 🎉" }}
 
 ```

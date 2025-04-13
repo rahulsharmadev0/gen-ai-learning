@@ -6,6 +6,7 @@ import sys
 import re
 import platform
 import shlex
+import subprocess
 from google import genai
 from google.genai import types
 from colorama import Fore, Style, init
@@ -97,9 +98,29 @@ class CursorAI:
         return None
 
     def run_command(self, command):
-        """Run a command using os.system and return the result."""
+        """Run a command and return the success status and output."""
         try:
-            result = os.system(command=command)
+            # For Windows, we need to use shell=True
+            use_shell = self.os_type == "Windows"
+            
+            # Use shlex.split to correctly handle command arguments on Unix systems
+            cmd_parts = shlex.split(command) if not use_shell else command
+            
+            # Run the command and capture output
+            result = subprocess.run(
+                cmd_parts,
+                shell=use_shell,
+                capture_output=True,
+                text=True,
+                check=False  # Don't raise an exception on non-zero exit
+            )
+            
+            # Combine stdout and stderr if there's an error
+            output = result.stdout
+            if result.returncode != 0 and result.stderr:
+                output += f"\nError: {result.stderr}"
+                
+            return result.returncode == 0, output
         except Exception as e:
             return False, f"Error executing command: {str(e)}"
     
